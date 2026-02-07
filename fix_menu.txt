@@ -1,0 +1,70 @@
+===== CÁC LỖI CẦN SỬA TRONG CODE =====
+
+1. LỖI NGHIÊM TRỌNG - Hàm menu(), case 8:
+   
+   SAI:
+   case 8:
+       prinf("Nhap mssv cần xoá: &d");
+   
+   ĐÚNG:
+   case 8: {
+       int msnv = nhapSoNguyen("Nhập MSNV cần xóa: ");
+       int pos = timMSNVTuanTu(ds, msnv);
+       if (pos == -1) {
+           printf(">> Không tìm thấy nhân viên có MSNV %d!\n", msnv);
+       } else {
+           printf("\n>> Thông tin nhân viên sẽ xóa:\n");
+           xuat1NV(ds.a[pos]);
+           printf("\nBạn có chắc muốn xóa? (1: Có | 0: Không): ");
+           int xacNhan = nhapSoNguyen("");
+           if (xacNhan == 1) {
+               for (int i = pos; i < ds.n - 1; i++) {
+                   ds.a[i] = ds.a[i + 1];
+               }
+               ds.n--;
+               printf(">> Đã xóa nhân viên thành công!\n");
+           } else {
+               printf(">> Đã hủy thao tác xóa.\n");
+           }
+       }
+       break;
+   }
+
+2. BỔ SUNG THÊM - Chức năng sửa thông tin nhân viên (case 9):
+
+   Thêm vào menu:
+   printf("\n9. Sửa thông tin nhân viên");
+   
+   Thêm case 9:
+   case 9: {
+       int msnv = nhapSoNguyen("Nhập MSNV cần sửa: ");
+       int pos = timMSNVTuanTu(ds, msnv);
+       if (pos == -1) {
+           printf(">> Không tìm thấy!\n");
+       } else {
+           printf("\n>> Thông tin hiện tại:\n");
+           xuat1NV(ds.a[pos]);
+           printf("\n>> Nhập thông tin mới:\n");
+           int idCu = ds.a[pos].msnv;
+           if (nhap1NV(&ds.a[pos], idCu)) {
+               printf(">> Đã cập nhật thành công!\n");
+           }
+       }
+       break;
+   }
+
+3. SỬA ĐIỀU KIỆN THOÁT:
+   
+   SAI:
+   } while (c != 7);
+   
+   ĐÚNG:
+   } while (c != 7 && c != 10);  // Nếu thêm case 9, 10 là thoát
+
+===== CÁC CẢI TIẾN NÊN BỔ SUNG =====
+
+1. Thêm chức năng tìm kiếm theo phòng ban
+2. Thêm chức năng thống kê theo phòng ban
+3. Thêm validation khi nhập số điện thoại (nếu có)
+4. Thêm chức năng sao lưu tự động
+5. Thêm menu con cho thống kê chi tiết hơn
